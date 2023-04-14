@@ -1,8 +1,8 @@
 const keys = {
-    w: {
+    z: {
         pressed: false,
     },
-    a: {
+    q: {
         pressed: false,
     },
     s: {
@@ -16,10 +16,10 @@ const keys = {
 
 window.addEventListener('keydown'), (e) => {
     switch (e.key) {
-        case 'w':
+        case 'z':
             keys.w.pressed = true;
             break;
-        case 'a':
+        case 'q':
             keys.a.pressed = true;
             break;
         case 's':
