@@ -9,6 +9,7 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 
 const image = new Image();
 image.src = './image/Ile_Prairie_LM.png';
+console.log(image);
 
 image.onload = () => {
     c.drawImage(image, 0, 0);
