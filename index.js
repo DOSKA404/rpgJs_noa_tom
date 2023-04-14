@@ -11,6 +11,12 @@ const image = new Image();
 image.src = './image/Ile_Prairie_LM.png';
 console.log(image);
 
+const playerImage = new Image();
+playerImage.src = './image/player.png';
+
 image.onload = () => {
     c.drawImage(image, 0, 0);
+    c.drawImage(playerImage, -300, -300);
     }
+
+
