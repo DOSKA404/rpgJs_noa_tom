@@ -16,7 +16,7 @@ playerImage.src = './image/player.png';
 
 image.onload = () => {
     c.drawImage(image, 0, 0);
-    c.drawImage(playerImage, -300, -300);
+    c.drawImage(playerImage, 300, 0);
     }
 
 
