@@ -46,13 +46,13 @@ function animate(){
     background.draw();
     c.drawImage(playerImage,0,0,playerImage.width/4,playerImage.height,canvas.width/2 - playerImage.width/4/2,canvas.height/2 - playerImage.height/2,playerImage.width/4,playerImage.height);
 
-    if(key.z.pressed){
+    if(key.z.pressed && lastKey === 'z'){
         background.position.y += 5;
-    }else if(key.s.pressed){
+    }else if(key.s.pressed && lastKey === 's'){
         background.position.y -= 5;
-    }else if(key.q.pressed){
+    }else if(key.q.pressed && lastKey === 'q'){
         background.position.x += 5;
-    }else if(key.d.pressed){
+    }else if(key.d.pressed && lastKey === 'd'){
         background.position.x -= 5;
     }
     
@@ -60,19 +60,25 @@ function animate(){
 }
 animate();
 
+let lastKey = '';
+
 window.addEventListener('keydown',(e) => {
     switch (e.key) {
         case 'z':
             key.z.pressed = true;
+            lastKey = 'z';
             break;
         case 'q':
             key.q.pressed = true;
+            lastKey = 'q';
             break;
         case 's':
             key.s.pressed = true;
+            lastKey = 's';
             break;
         case 'd':
             key.d.pressed = true;
+            lastKey = 'd';
             break;
     }
 })
