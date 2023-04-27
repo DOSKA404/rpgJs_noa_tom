@@ -13,10 +13,7 @@ const keys = {
     },
 };
 
-if (keys.z.pressed){
-    background.position.y = background.position.y + 3
-    
-}
+
 
 
 window.addEventListener('keydown'), (e) => {
@@ -53,12 +50,24 @@ window.addEventListener('keyup'), (e) => {
     }
 }
 
-function animate (
+function animate (){
     window.requestAnimationFrame(animate);
+    c.drawImage(playerImage,
+        0,
+        0,
+        playerImage.width/4,
+        playerImage.height,
+        canvas.width/2 - playerImage.width/4/2,
+        canvas.height/2 - playerImage.height/2,
+        playerImage.width/4, playerImage.height)
 
-)
+    if (keys.z.pressed)background.position.y += 3
+    else if (keys.s.pressed)background.position.y -= 3
+    else if (keys.d.pressed)background.position.x += 3
+    else if (keys.q.pressed)background.position.x -= 3
+    
+}
 
-if ()
 
 
 class Sprite {
