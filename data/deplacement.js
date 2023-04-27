@@ -52,6 +52,7 @@ window.addEventListener('keyup'), (e) => {
 
 function animate (){
     window.requestAnimationFrame(animate);
+    background.draw()
     c.drawImage(playerImage,
         0,
         0,
