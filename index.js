@@ -47,13 +47,13 @@ function animate(){
     c.drawImage(playerImage,0,0,playerImage.width/4,playerImage.height,canvas.width/2 - playerImage.width/4/2,canvas.height/2 - playerImage.height/2,playerImage.width/4,playerImage.height);
 
     if(key.z.pressed && lastKey === 'z'){
-        background.position.y += 5;
+        background.position.y += 7;
     }else if(key.s.pressed && lastKey === 's'){
-        background.position.y -= 5;
+        background.position.y -= 7;
     }else if(key.q.pressed && lastKey === 'q'){
-        background.position.x += 5;
+        background.position.x += 7;
     }else if(key.d.pressed && lastKey === 'd'){
-        background.position.x -= 5;
+        background.position.x -= 7;
     }
     
 
