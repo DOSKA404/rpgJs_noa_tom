@@ -4,7 +4,41 @@ const c = canvas.getContext('2d');
 canvas.width = 1024
 canvas.height = 576
 
-c.fillStyle = 'red';
+const collisionsMap = [];
+for (let i=0; i<collisions.length; i+=60) {//changer le 60 si la taille de la map change
+    collisionsMap.push(collisions.slice(i,60 + i));
+}
+
+class Boundary {
+    static width = 48
+    static height = 48
+    constructor({ position }) {
+      this.position = position
+      this.width = 48
+      this.height = 48
+    }
+  
+    draw() {
+      c.fillStyle ='red';
+      c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    }
+  }
+
+const boundaries = [];
+const offset = {
+    x:-550,
+    y:-1200
+}
+
+collisionsMap.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if(symbol == '1025'){
+            boundaries.push(new Boundary({position:{x:j * Boundary.width + offset.x,y:i * Boundary.height + offset.y }}));
+        }
+    });
+});
+
+c.fillStyle = 'blue';
 c.fillRect(0, 0, canvas.width, canvas.height);
 
 const image = new Image();
@@ -14,17 +48,32 @@ const playerImage = new Image();
 playerImage.src = './image/playerDown.png';
 
 class Sprite{
-    constructor({position,velocity,image}){
+    constructor({position,velocity,image,frames ={max:1}}){
         this.position = position
         this.image = image
+        this.frames = frames
+
+        this.image.onload = () => {
+            this.width = this.image.width / this.frames.max
+            this.height = this.image.height
+        }
     }
 
     draw(){
-        c.drawImage(this.image,this.position.x,this.position.y);
+        c.drawImage(
+            this.image,
+            0,
+            0,
+            this.image.width / this.frames.max,
+            this.image.height,
+            this.position.x,
+            this.position.y,
+            this.image.width / this.frames.max,
+            this.image.height
+            );
     }
 }
 
-const background = new Sprite({position:{x:-950,y:-1750},image:image});
 
 const key={
     z:{
@@ -41,22 +90,93 @@ const key={
     }
 }
 
+const player = new Sprite({position:{x:canvas.width/2 - 192/4/2,y:canvas.height/2 - 68/2},image:playerImage,frames:{max:4}});
+const background = new Sprite({position:{x:offset.x,y:offset.y},image:image});
+
+const movables = [background,...boundaries];
+
 function animate(){
     window.requestAnimationFrame(animate);
     background.draw();
-    c.drawImage(playerImage,0,0,playerImage.width/4,playerImage.height,canvas.width/2 - playerImage.width/4/2,canvas.height/2 - playerImage.height/2,playerImage.width/4,playerImage.height);
+    boundaries.forEach(boundary => {
+        boundary.draw()
+    });
+    player.draw();
 
+   
+    let moving = true;
     if(key.z.pressed && lastKey === 'z'){
-        background.position.y += 7;
+        for(let i=0; i < boundaries.length; i++){
+            const boundary = boundaries[i];
+            if( player.position.x + player.width >= boundary.position.x &&
+                player.position.y + player.height >= (boundary.position.y+5) &&
+                player.position.x <= boundary.position.x + boundary.width &&
+                player.position.y <= (boundary.position.y+5) + boundary.height
+                // rectangularCollision({player: player, bloc: {...boundary, position:{x:boundary.position.x, y:boundary.position.y +7}}})
+                ){
+                console.log("colliding");
+               moving = false;
+               break
+            }
+        }
+        if (moving){
+            movables.forEach(movable => {movable.position.y += 7});
+        }
     }else if(key.s.pressed && lastKey === 's'){
-        background.position.y -= 7;
+        for(let i=0; i < boundaries.length; i++){
+            const boundary = boundaries[i];
+            if( player.position.x + player.width >= boundary.position.x &&
+                player.position.y + player.height >= (boundary.position.y-5) &&
+                player.position.x <= boundary.position.x + boundary.width &&
+                player.position.y <= (boundary.position.y-5) + boundary.height
+                // rectangularCollision({player: player, bloc: {...boundary, position:{x:boundary.position.x, y:boundary.position.y +7}}})
+                ){
+                console.log("colliding");
+               moving = false;
+               break
+            }
+        }
+        if (moving){
+            movables.forEach(movable => {movable.position.y -= 7});
+        }
+        
     }else if(key.q.pressed && lastKey === 'q'){
-        background.position.x += 7;
+        for(let i=0; i < boundaries.length; i++){
+            const boundary = boundaries[i];
+            if( player.position.x + player.width >= (boundary.position.x+5) &&
+                player.position.y + player.height >= boundary.position.y &&
+                player.position.x <= (boundary.position.x+5) + boundary.width &&
+                player.position.y <= boundary.position.y + boundary.height
+                // rectangularCollision({player: player, bloc: {...boundary, position:{x:boundary.position.x, y:boundary.position.y +7}}})
+                ){
+                console.log("colliding");
+               moving = false;
+               break
+            }
+        }
+        if (moving){
+            movables.forEach(movable => {movable.position.x += 7});
+        }
+        
     }else if(key.d.pressed && lastKey === 'd'){
-        background.position.x -= 7;
+        for(let i=0; i < boundaries.length; i++){
+            const boundary = boundaries[i];
+            if( player.position.x + player.width >= (boundary.position.x-5) &&
+                player.position.y + player.height >= boundary.position.y &&
+                player.position.x <= (boundary.position.x-5) + boundary.width &&
+                player.position.y <= boundary.position.y + boundary.height
+                // rectangularCollision({player: player, bloc: {...boundary, position:{x:boundary.position.x, y:boundary.position.y +7}}})
+                ){
+                console.log("colliding");
+               moving = false;
+               break
+            }
+        }
+        if (moving){
+            movables.forEach(movable => {movable.position.x -= 7});
+        }
+       
     }
-    
-
 }
 animate();
 
