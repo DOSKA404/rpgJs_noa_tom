@@ -5,8 +5,8 @@ canvas.width = 1024
 canvas.height = 576
 
 const collisionsMap = [];
-for (let i=0; i<collisions.length; i+=60) {//changer le 60 si la taille de la map change
-    collisionsMap.push(collisions.slice(i,60 + i));
+for (let i=0; i<collisions.length; i+=100) {//changer le 100 si la taille de la map change
+    collisionsMap.push(collisions.slice(i,100 + i));
 }
 
 class Boundary {
@@ -19,16 +19,13 @@ class Boundary {
     }
   
     draw() {
-      c.fillStyle ='red';
+      c.fillStyle ='rgba(255, 0, 0, 0)';
       c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
   }
 
 const boundaries = [];
-const offset = {
-    x:-550,
-    y:-1200
-}
+const offset = {x:-1170,y:-1625}
 
 collisionsMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
@@ -42,7 +39,7 @@ c.fillStyle = 'blue';
 c.fillRect(0, 0, canvas.width, canvas.height);
 
 const image = new Image();
-image.src = './image/firstMap.png';
+image.src = './image/map.png';
 
 const playerImage = new Image();
 playerImage.src = './image/playerDown.png';
