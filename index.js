@@ -20,7 +20,7 @@ class Boundary {//create collision or tp bloc
     }
 
     draw() {
-        c.fillStyle ='rgba(255, 0, 0, 0.5)';
+        c.fillStyle ='rgba(255, 0, 0, 0)';
         c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 }
@@ -329,3 +329,70 @@ function animate(){
 animate();
 
 
+class Player{
+    constructor(name, hp, atk, sprite){
+            this.name = name;
+            this.hp = hp;
+            this.atk = atk;
+            this.sprite = sprite;
+            this.inventory = [];
+    }
+
+    attack(target){
+            target.hp -= this.atk;
+    }
+
+    isAlive(){
+            return this.hp > 0;
+    }
+
+    fight(target){
+            while(this.isAlive() && target.isAlive()){
+                    this.attack(target);
+                    target.attack(this);
+            }
+    }
+
+    addItem(item){
+            this.inventory.push(item);
+    }
+}
+
+class Target extends player{
+    constructor(name, hp, atk, sprite){
+            super(name, hp, atk, sprite);
+    }
+
+    attack(player)
+    {
+            player.hp -= this.atk;
+    }
+
+    isAlive(){
+            return this.hp > 0;
+    }
+
+    fight(player){
+            while(this.isAlive() && player.isAlive()){
+                    this.attack(player);
+                    player.attack(this);
+            }
+    }
+}
+
+class Item{
+    constructor(name, effect){
+            this.name = name;
+            this.effect = effect;
+    }
+
+    use(target){
+            target.hp += this.effect;
+    }
+}
+
+potion = new item("potion", 10);
+
+player1 = new player("player1", 100, 10,player );
+
+target1 = new target("target1", 100, 10);
