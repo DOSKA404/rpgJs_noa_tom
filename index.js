@@ -20,7 +20,7 @@ class Boundary {//create collision or tp bloc
     }
 
     draw() {
-        c.fillStyle ='rgba(255, 0, 0, 0)';
+        c.fillStyle ='rgba(255, 0, 0, 0.5)';
         c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 }
@@ -51,6 +51,7 @@ class Sprite{//create player sprite or background
             );
     }
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// INIT COLLISIONS /////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +91,63 @@ tpMap.forEach((row, i) => {
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////// INIT LAYER /////////////////////////////////////////////
+////////////////////////////////////// INIT MONSTER1 ///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
+const monster1Map = [];
+const monster1Boundaries = [];
+
+for (let i=0; i<monster1.length; i+=100) {//changer le 100 si la taille de la map change
+        monster1Map.push(monster1.slice(i,100 + i));
+}
+
+monster1Map.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if(symbol == '1025'){
+                monster1Boundaries.push(new Boundary({position:{x:j * Boundary.width + offset.x,y:i * Boundary.height + offset.y }}));
+        }
+    });
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////// INIT MONSTER2 ///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
+const monster2Map = [];
+const monster2Boundaries = [];
+
+for (let i=0; i<monster2.length; i+=100) {//changer le 100 si la taille de la map change
+        monster2Map.push(monster2.slice(i,100 + i));
+}
+
+monster2Map.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if(symbol == '1025'){
+                monster2Boundaries.push(new Boundary({position:{x:j * Boundary.width + offset.x,y:i * Boundary.height + offset.y }}));
+        }
+    });
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////// INIT MERCHAND /////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
+const merchandMap = [];
+const merchandBoundaries = [];
+
+for (let i=0; i<merchandCollision.length; i+=100) {//changer le 100 si la taille de la map change
+    merchandMap.push(merchandCollision.slice(i,100 + i));
+}
+
+merchandMap.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if(symbol == '1025'){
+            merchandBoundaries.push(new Boundary({position:{x:j * Boundary.width + offset.x,y:i * Boundary.height + offset.y }}));
+        }
+    });
+});
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////// INIT LAYER //////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 c.fillStyle = 'blue';
@@ -130,31 +187,6 @@ const key={
 }
 
 let lastKey = '';
-
-const Projectiles = []
-
-class Projectile{
-    constructor({position,velocity,radius}){
-        this.position = position;
-        this.velocity = velocity;
-        this.radius = radius;
-        
-    }
-
-    draw(){
-        c.beginPath();
-        c.arc(this.position.x,this.position.y,this.radius,0,Math.PI*2);
-        c.fillStyle = 'red';
-        c.fill();
-        c.closePath();
-    }
-
-    update(){
-        this.draw();
-        this.position.x += this.velocity.x;
-        this.position.y += this.velocity.y;
-    }
-}
 
 window.addEventListener('keydown',(e) => {
     switch (e.key) {
@@ -209,96 +241,7 @@ window.addEventListener('keyup',(e) => {
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////// KEYBOARD  ///////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-const movables = [background,foreground,...boundaries,...tpBoundaries];
-
-function keyboard(){
-
-    let moving = true;
-    if(key.z.pressed && lastKey === 'z'){
-        for(const boundary of boundaries){
-            if(player.position.x + player.width >= boundary.position.x &&
-              player.position.y + player.height >= (boundary.position.y+5) &&
-              player.position.x <= boundary.position.x + boundary.width &&
-              player.position.y <= (boundary.position.y+5) + boundary.height
-            ){
-              console.log("colliding");
-              moving = false;
-              break;
-            }
-          }
-          
-          if(moving){
-            for(const movable of movables){
-              movable.position.y += 7;
-            }
-          }
-    }else if(key.s.pressed && lastKey === 's'){
-        for (const boundary of boundaries) {
-            if (player.position.x + player.width >= boundary.position.x &&
-                player.position.y + player.height >= (boundary.position.y-5) &&
-                player.position.x <= boundary.position.x + boundary.width &&
-                player.position.y <= (boundary.position.y-5) + boundary.height
-                ) {
-              console.log("colliding");
-              moving = false;
-              break;
-            }
-          }
-        if (moving){
-            movables.forEach(movable => {movable.position.y -= 7});
-        }
-        
-    }else if(key.q.pressed && lastKey === 'q'){
-        for (const boundary of boundaries) {
-            if (
-              player.position.x + player.width >= boundary.position.x + 5 &&
-              player.position.y + player.height >= boundary.position.y &&
-              player.position.x <= boundary.position.x + 5 + boundary.width &&
-              player.position.y <= boundary.position.y + boundary.height
-              ) {
-              console.log("colliding");
-              moving = false;
-              break;
-            }
-          }
-        if (moving){
-            movables.forEach(movable => {movable.position.x += 7});
-        }
-        
-    }else if(key.d.pressed && lastKey === 'd'){
-        for(const boundary of boundaries){
-            if(player.position.x + player.width >= (boundary.position.x-5) &&
-                player.position.y + player.height >= boundary.position.y &&
-                player.position.x <= (boundary.position.x-5) + boundary.width &&
-                player.position.y <= boundary.position.y + boundary.height
-                 ){
-                console.log("colliding");
-                moving = false;
-                break;
-            }
-        }
-        if (moving){
-            movables.forEach(movable => {movable.position.x -= 7});
-        }
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////Projectile/////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////// ANIMATE //////////////////////////////////////
+////////////////////////////////////// ANIMATE /////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -310,7 +253,9 @@ function animate(){
     boundaries.forEach(boundary => {
         boundary.draw()
     });
-    
+    monster1Boundaries.forEach(monster1Boundary => {monster1Boundary.draw()});
+    monster2Boundaries.forEach(monster2Boundary => {monster2Boundary.draw()});
+    merchandBoundaries.forEach(merchandBoundary => {merchandBoundary.draw()});
     player.draw();
 
     foreground.draw();
@@ -319,12 +264,9 @@ function animate(){
     });
     
     keyboard();
-
-    Projectiles.forEach(new Projectile,index => {
-    projectile.update();
-    })
 }
 
+const movables = [background,foreground,...boundaries,...tpBoundaries,...monster1Boundaries,...monster2Boundaries,...merchandBoundaries];
 
 animate();
 
