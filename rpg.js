@@ -1,14 +1,15 @@
-class player{
-        constructor(name, hp, atk, sprite){
+export class player{
+        constructor(name, hp, attack, gold, sprite){
                 this.name = name;
                 this.hp = hp;
-                this.atk = atk;
+                this.attack = attack;
+                this.gold = gold;
                 this.sprite = sprite;
                 this.inventory = [];
         }
 
-        attack(target){
-                target.hp -= this.atk;
+        attackTarget(target){
+                target.hp -= this.attack;
         }
 
         isAlive(){
@@ -28,13 +29,13 @@ class player{
 }
 
 class target extends player{
-        constructor(name, hp, atk, sprite){
-                super(name, hp, atk, sprite);
+        constructor(name, hp, attack, sprite){
+                super(name, hp, attack, sprite);
         }
 
-        attack(player)
+        attackPlayer(player)
         {
-                player.hp -= this.atk;
+                player.hp -= this.attack;
         }
 
         isAlive(){
@@ -49,7 +50,7 @@ class target extends player{
         }
 }
 
-class item{
+export class item{
         constructor(name, effect){
                 this.name = name;
                 this.effect = effect;
@@ -60,6 +61,42 @@ class item{
         }
 }
 
+export class merchant{
+        constructor(name, inventory, gold){
+                this.name = name;
+                this.inventory = inventory;
+                this.gold = gold;
+        }
+
+        addGold(amount) {     
+                player1.gold += amount;
+        }
+
+        removeGold(amount) {
+                if (player1.gold < amount) {
+                }else{
+                        player1.gold -= amount;
+                }
+        }
+
+        sellItem (item, player){
+                player.addItem(item);
+                player.removeGold(10);
+        }
+
+        buyItem (item, player){
+                player.removeItem(item);
+                player.addGold(5)
+        }
+
+}
+
+
+
+
 potion = new item("potion", 10);
 
 player1 = new player("player1", 100, 10, );
+
+merchant = new merchant("Traveller Merchant", "merchant.png");
+
