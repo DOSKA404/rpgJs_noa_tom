@@ -28,6 +28,25 @@ export class player{
         }
 }
 
+export class ennemy {
+        constructor(name, hp, attack, gold){
+                this.name = name;
+                this.hp = hp;
+                this.attack = attack;
+                this.gold = gold;
+        }
+
+        addGold(amount) {     
+                player1.gold += amount;
+        }
+
+        isDead(){
+                if (this.hp <= 0){
+                        addGold(this.gold);
+                }
+        }
+}
+
 class target extends player{
         constructor(name, hp, attack, sprite){
                 super(name, hp, attack, sprite);
