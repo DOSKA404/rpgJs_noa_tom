@@ -1,6 +1,19 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
+let life= 100;
+let money= 0;
+let lifeMonster1= 90;
+let lifeMonster2= 90;
+
+let j = 0;// pour verifier la mort du monstre 1
+let i = 0;// pour verifier la mort du monstre 2
+
+let element = document.getElementById('life')
+
+let elementMonster1 = document.getElementById('monsterLife1')
+let elementMonster2 = document.getElementById('monsterLife2')
+
 canvas.width = 1024;
 canvas.height = 576;
 
@@ -20,7 +33,7 @@ class Boundary {//create collision or tp bloc
     }
 
     draw() {
-        c.fillStyle ='rgba(255, 0, 0, 0.5)';
+        c.fillStyle ='rgba(255, 0, 0, 0)';
         c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 }
@@ -162,9 +175,40 @@ playerImage.src = './data/playerSprite/playerDown.png';
 const foregroundImage = new Image();
 foregroundImage.src = './data/Ile_1/foreground.png';
 
+const monster1Image = new Image();
+monster1Image.src = './data/Ile_1/monster1.png';
+
+const monster2Image = new Image();
+monster2Image.src = './data/Ile_1/monster2.png';
+
 const player = new Sprite({position:{x:canvas.width/2 - 192/4/2,y:canvas.height/2 - 68/2},image:playerImage,frames:{max:4}});
 const background = new Sprite({position:{x:offset.x,y:offset.y},image:image});
 const foreground = new Sprite({position:{x:offset.x,y:offset.y},image:foregroundImage});
+const spriteMonster1 = new Sprite({position:{x:offset.x,y:offset.y},image:monster1Image});
+const spriteMonster2 = new Sprite({position:{x:offset.x,y:offset.y},image:monster2Image});
+
+function checkLife(){
+    if (life <= 0){
+        alert("Vous avez perdu");
+        life = 100;
+        document.location.reload();
+        animate();
+    }
+}
+
+function checkLifeMonster1(){
+    if (lifeMonster1 <= 0 && j == 0){
+        j++
+        money += 10;
+    }
+}
+
+function checkLifeMonster2(){
+    if (lifeMonster2 <= 0 && i == 0){
+        i++
+        money += 10;
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// EVENT LISTENER //////////////////////////////////////
@@ -206,20 +250,6 @@ window.addEventListener('keydown',(e) => {
             key.d.pressed = true;
             lastKey = 'd';
             break;
-            case ' ':
-                console.log('Space is push !')
-                Projectiles.push(new Projectile({
-                    position:{
-                        x:player.position.x + player.width/2,
-                        y:player.position.y + player.height/2
-                    },
-                    velocity:{
-                        x:5,
-                        y:0
-                    },
-                    radius:5
-                }));
-                break;
     }
 })
 
@@ -250,91 +280,45 @@ function animate(){
     window.requestAnimationFrame(animate);
     background.draw(); 
     
-    boundaries.forEach(boundary => {
-        boundary.draw()
-    });
-    monster1Boundaries.forEach(monster1Boundary => {monster1Boundary.draw()});
-    monster2Boundaries.forEach(monster2Boundary => {monster2Boundary.draw()});
+    boundaries.forEach(boundary => {boundary.draw()});
+
+    if (lifeMonster1 > 0){
+        monster1Boundaries.forEach(monster1Boundary => {monster1Boundary.draw()});
+        elementMonster1.innerText = 'Life monster 1: ' + lifeMonster1;
+    }else{
+        elementMonster1.innerText = '';
+    }
+
+    if (lifeMonster2 > 0){
+        monster2Boundaries.forEach(monster2Boundary => {monster2Boundary.draw()});
+        elementMonster2.innerText = 'Life monster 2 : ' + lifeMonster2 ;
+    }else{
+        elementMonster2.innerText = '';
+    }
+
     merchandBoundaries.forEach(merchandBoundary => {merchandBoundary.draw()});
     player.draw();
 
+    if (lifeMonster1 > 0){
+        spriteMonster1.draw();
+    }
+
+    if (lifeMonster2 > 0){
+        spriteMonster2.draw();
+    }
+
     foreground.draw();
-    tpBoundaries.forEach(tp_boundary => {
-        tp_boundary.draw()
-    });
+    tpBoundaries.forEach(tp_boundary => {tp_boundary.draw()});
+    
+    checkLife();
+    checkLifeMonster1();
+    checkLifeMonster2();
+
+    element.innerText = 'Life : ' + life + '/-/ Money : ' + money 
     
     keyboard();
 }
 
-const movables = [background,foreground,...boundaries,...tpBoundaries,...monster1Boundaries,...monster2Boundaries,...merchandBoundaries];
+const movables = [background,foreground,spriteMonster1,spriteMonster2,...boundaries,...tpBoundaries,...monster1Boundaries,...monster2Boundaries,...merchandBoundaries];
 
 animate();
-
-
-class Player{
-    constructor(name, hp, atk, sprite){
-            this.name = name;
-            this.hp = hp;
-            this.atk = atk;
-            this.sprite = sprite;
-            this.inventory = [];
-    }
-
-    attack(target){
-            target.hp -= this.atk;
-    }
-
-    isAlive(){
-            return this.hp > 0;
-    }
-
-    fight(target){
-            while(this.isAlive() && target.isAlive()){
-                    this.attack(target);
-                    target.attack(this);
-            }
-    }
-
-    addItem(item){
-            this.inventory.push(item);
-    }
-}
-
-class Target extends player{
-    constructor(name, hp, atk, sprite){
-            super(name, hp, atk, sprite);
-    }
-
-    attack(player)
-    {
-            player.hp -= this.atk;
-    }
-
-    isAlive(){
-            return this.hp > 0;
-    }
-
-    fight(player){
-            while(this.isAlive() && player.isAlive()){
-                    this.attack(player);
-                    player.attack(this);
-            }
-    }
-}
-
-class Item{
-    constructor(name, effect){
-            this.name = name;
-            this.effect = effect;
-    }
-
-    use(target){
-            target.hp += this.effect;
-    }
-}
-
-potion = new item("potion", 10);
-
-player1 = new player("player1", 100, 10,player );
-
-target1 = new target("target1", 100, 10);
