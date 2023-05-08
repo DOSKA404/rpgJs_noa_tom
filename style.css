@@ -9,4 +9,34 @@ margin-top: 1%;
     border-radius: 2%;
     border: 3px solid black;
 }
-    
+
+#life{
+    display: flex;
+    position: absolute;
+    margin-left: 20%;
+    margin-top: 1%;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+
+}
+
+#monsterLife1{
+    display: flex;
+    position: absolute;
+    margin-left: 40%;
+    margin-top: 1%;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#monsterLife2{
+    display: flex;
+    position: absolute;
+    margin-left: 60%;
+    margin-top: 1%;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
