@@ -3,6 +3,8 @@ const c = canvas.getContext('2d');
 
 let life= 100;
 let money= 0;
+let inventory= [];
+
 let lifeMonster1= 90;
 let lifeMonster2= 90;
 
@@ -61,7 +63,7 @@ class Sprite{//create player sprite or background
             this.position.y,
             this.image.width / this.frames.max,
             this.image.height
-            );
+        );
     }
 }
 

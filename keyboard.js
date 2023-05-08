@@ -182,6 +182,10 @@ let moving = true;
     }
 
   }else if(key.e.pressed && lastKey === 'e'){
-    console.log('inventaire');
+    if (inventoryOpen == false){
+        inventoryOpen = true;
+        }else{
+        inventoryOpen = false;
+}
   }
 }
