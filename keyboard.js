@@ -180,7 +180,7 @@ let moving = true;
         }
       }
     }
-
+ 
   }else if(key.e.pressed && lastKey === 'e'){
     console.log('inventaire');
   }
