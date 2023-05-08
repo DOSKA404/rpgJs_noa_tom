@@ -180,7 +180,7 @@ let moving = true;
         }
       }
     }
-
+ 
   }else if(key.e.pressed && lastKey === 'e'){
     if (inventoryOpen == false){
         inventoryOpen = true;
