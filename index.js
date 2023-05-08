@@ -1,9 +1,48 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
+let inGame = true;
+let inShop = false;
+
+class potion{
+    constructor(){
+        this.name = "potion";
+    }
+    use(){
+        life += 20;
+        if(life > 100){
+            life = 100;
+        }
+    }
+}
+
+class SuperPotion{
+    constructor(){
+        this.name = "SuperPotion";
+    }
+    use(){
+        life += 50;
+        if(life > 100){
+            life = 100;
+        }
+    }
+}
+
 let life= 100;
 let money= 0;
-let inventory= [];
+let inventoryList= [];
+
+let shopInventory= [new potion(), new SuperPotion()];
+let numberOfPotion= 5;
+let numberOfSuperPotion= 2;
+
+function shop(){
+    //envoyer un template de li dans le dom avec un bouton acheter
+}
+
+function inventory(){
+    //envoyer un template de li dans le dom avec un bouton utiliser
+}
 
 let lifeMonster1= 90;
 let lifeMonster2= 90;
@@ -15,6 +54,10 @@ let element = document.getElementById('life')
 
 let elementMonster1 = document.getElementById('monsterLife1')
 let elementMonster2 = document.getElementById('monsterLife2')
+
+let inventoryElement = document.getElementById('inventory')
+let shopElement = document.getElementById('shop')
+let selectedElement = document.getElementById('selectedElement')
 
 canvas.width = 1024;
 canvas.height = 576;
@@ -247,7 +290,6 @@ const key={
     e:{
         pressed:false,
     }
-
 }
 
 let lastKey = '';
@@ -307,8 +349,6 @@ window.addEventListener('keyup',(p) => {
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// ANIMATE /////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 function animate(){
     setTimeout(() => {
