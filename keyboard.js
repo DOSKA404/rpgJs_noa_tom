@@ -10,7 +10,6 @@ let moving = true;
     for(const boundary of boundaries){
       if(player.position.x + player.width >= boundary.position.x && player.position.y + player.height >= (boundary.position.y+5) && player.position.x <= boundary.position.x + boundary.width && player.position.y <= (boundary.position.y+5) + boundary.height){
         moving = false;
-        life -= 0.1;
         break;
       }
     }
@@ -19,7 +18,6 @@ let moving = true;
       if(player.position.x + player.width >= boundary.position.x && player.position.y + player.height >= (boundary.position.y+5) && player.position.x <= boundary.position.x + boundary.width && player.position.y <= (boundary.position.y+5) + boundary.height){
         moving = false;
         life -= 3;
-        lifeMonster1 -= 7;
         break;
       }
     }
@@ -29,7 +27,6 @@ let moving = true;
       if(player.position.x + player.width >= boundary.position.x && player.position.y + player.height >= (boundary.position.y+5) && player.position.x <= boundary.position.x + boundary.width && player.position.y <= (boundary.position.y+5) + boundary.height){
         moving = false;
         life -= 3;
-        lifeMonster2 -= 7;
         break;
       }
     }
@@ -48,7 +45,6 @@ let moving = true;
     for (const boundary of boundaries) {
       if(player.position.x + player.width >= boundary.position.x && player.position.y + player.height >= (boundary.position.y-5) && player.position.x <= boundary.position.x + boundary.width && player.position.y <= (boundary.position.y-5) + boundary.height){
         moving = false;
-        life -= 0.1;
         break;
       }
     }
@@ -57,7 +53,6 @@ let moving = true;
         if(player.position.x + player.width >= boundary.position.x && player.position.y + player.height >= (boundary.position.y-5) && player.position.x <= boundary.position.x + boundary.width && player.position.y <= (boundary.position.y-5) + boundary.height){
           moving = false;
           life -= 3;
-          lifeMonster1 -= 7;
           break;
         }
       }
@@ -67,7 +62,6 @@ let moving = true;
         if(player.position.x + player.width >= boundary.position.x && player.position.y + player.height >= (boundary.position.y-5) && player.position.x <= boundary.position.x + boundary.width && player.position.y <= (boundary.position.y-5) + boundary.height){
           moving = false;
           life -= 3;
-          lifeMonster2 -= 7;
           break;
         }
       }
@@ -85,7 +79,6 @@ let moving = true;
     for (const boundary of boundaries) {
       if(player.position.x + player.width >= boundary.position.x + 5 && player.position.y + player.height >= boundary.position.y && player.position.x <= boundary.position.x + 5 + boundary.width && player.position.y <= boundary.position.y + boundary.height){
         moving = false;
-        life -= 0.1;
         break;
       }
     }
@@ -94,7 +87,6 @@ let moving = true;
         if(player.position.x + player.width >= boundary.position.x + 5 && player.position.y + player.height >= boundary.position.y && player.position.x <= boundary.position.x + 5 + boundary.width && player.position.y <= boundary.position.y + boundary.height){
           moving = false;
           life -= 3;
-          lifeMonster1 -= 7;
           break;
         }
       }
@@ -104,7 +96,6 @@ let moving = true;
         if(player.position.x + player.width >= boundary.position.x + 5 && player.position.y + player.height >= boundary.position.y && player.position.x <= boundary.position.x + 5 + boundary.width && player.position.y <= boundary.position.y + boundary.height){
           moving = false;
           life -= 3;
-          lifeMonster2 -= 7;
           break;
         }
       }
@@ -124,7 +115,6 @@ let moving = true;
     for(const boundary of boundaries){
       if(player.position.x + player.width >= (boundary.position.x-5) && player.position.y + player.height >= boundary.position.y && player.position.x <= (boundary.position.x-5) + boundary.width && player.position.y <= boundary.position.y + boundary.height){
         moving = false;
-        life -= 0.1;
         break;
       }
     }
@@ -133,7 +123,6 @@ let moving = true;
         if(player.position.x + player.width >= (boundary.position.x-5) && player.position.y + player.height >= boundary.position.y && player.position.x <= (boundary.position.x-5) + boundary.width && player.position.y <= boundary.position.y + boundary.height){
           moving = false;
           life -= 3;
-          lifeMonster1 -= 7;
           break;
         }
       }
@@ -143,7 +132,6 @@ let moving = true;
         if(player.position.x + player.width >= (boundary.position.x-5) && player.position.y + player.height >= boundary.position.y && player.position.x <= (boundary.position.x-5) + boundary.width && player.position.y <= boundary.position.y + boundary.height){
           moving = false;
           life -= 3;
-          lifeMonster2 -= 7;
           break;
         }
       }
@@ -158,6 +146,42 @@ let moving = true;
     if (moving){
       movables.forEach(movable => {movable.position.x -= 7});
     }
+  }else if(key.space.pressed && lastKey === ' '){
+    console.log('attaque');
+    if (lifeMonster1 > 0){
+      for(const boundary of monster1Boundaries){
+        if(player.position.x + player.width >= boundary.position.x && player.position.y + player.height >= (boundary.position.y+5) && player.position.x <= boundary.position.x + boundary.width && player.position.y <= (boundary.position.y+5) + boundary.height 
+        || player.position.x + player.width >= boundary.position.x && player.position.y + player.height >= (boundary.position.y-5) && player.position.x <= boundary.position.x + boundary.width && player.position.y <= (boundary.position.y-5) + boundary.height 
+        || player.position.x + player.width >= boundary.position.x + 5 && player.position.y + player.height >= boundary.position.y && player.position.x <= boundary.position.x + 5 + boundary.width && player.position.y <= boundary.position.y + boundary.height
+        || player.position.x + player.width >= (boundary.position.x-5) && player.position.y + player.height >= boundary.position.y && player.position.x <= (boundary.position.x-5) + boundary.width && player.position.y <= boundary.position.y + boundary.height
+        ){
+          moving = false;
+          let randomNum = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
+          var randomAttack = Math.floor(Math.random() * (10 - 5 + 1)) + 5;
+          life -= randomNum;
+          lifeMonster1 -= randomAttack;
+          break;
+        }
+      }
+    }
+    if (lifeMonster2 > 0){
+      for(const boundary of monster2Boundaries){
+        if(player.position.x + player.width >= boundary.position.x && player.position.y + player.height >= (boundary.position.y+5) && player.position.x <= boundary.position.x + boundary.width && player.position.y <= (boundary.position.y+5) + boundary.height 
+        || player.position.x + player.width >= boundary.position.x && player.position.y + player.height >= (boundary.position.y-5) && player.position.x <= boundary.position.x + boundary.width && player.position.y <= (boundary.position.y-5) + boundary.height 
+        ||player.position.x + player.width >= boundary.position.x + 5 && player.position.y + player.height >= boundary.position.y && player.position.x <= boundary.position.x + 5 + boundary.width && player.position.y <= boundary.position.y + boundary.height
+        ||player.position.x + player.width >= (boundary.position.x-5) && player.position.y + player.height >= boundary.position.y && player.position.x <= (boundary.position.x-5) + boundary.width && player.position.y <= boundary.position.y + boundary.height
+        ){
+          moving = false;
+          let randomNum = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
+          var randomAttack = Math.floor(Math.random() * (10 - 5 + 1)) + 5;
+          life -= randomNum;
+          lifeMonster2 -= randomAttack;
+          break;
+        }
+      }
+    }
+
+  }else if(key.e.pressed && lastKey === 'e'){
+    console.log('inventaire');
   }
 }
-

@@ -226,14 +226,20 @@ const key={
     },
     s:{
         pressed:false,
+    },
+    space:{
+        pressed:false,
+    },
+    e:{
+        pressed:false,
     }
 
 }
 
 let lastKey = '';
 
-window.addEventListener('keydown',(e) => {
-    switch (e.key) {
+window.addEventListener('keydown',(p) => {
+    switch (p.key) {
         case 'z':
             key.z.pressed = true;
             lastKey = 'z';
@@ -250,11 +256,19 @@ window.addEventListener('keydown',(e) => {
             key.d.pressed = true;
             lastKey = 'd';
             break;
+        case ' ':
+            key.space.pressed = true;
+            lastKey = ' ';
+            break;
+        case 'e':
+            key.e.pressed = true;
+            lastKey = 'e';
+            break;
     }
 })
 
-window.addEventListener('keyup',(e) => {
-    switch (e.key) {
+window.addEventListener('keyup',(p) => {
+    switch (p.key) {
         case 'z':
             key.z.pressed = false;
             break;
@@ -267,6 +281,12 @@ window.addEventListener('keyup',(e) => {
         case 'd':
             key.d.pressed = false;
             break;
+        case ' ':
+            key.space.pressed = false;
+            break;
+        case 'e':
+            key.e.pressed = false;
+            break;
     }
 })
 
@@ -277,46 +297,50 @@ window.addEventListener('keyup',(e) => {
 
 
 function animate(){
-    window.requestAnimationFrame(animate);
-    background.draw(); 
+    setTimeout(() => {
+        window.requestAnimationFrame(animate);
+        background.draw(); 
+        
+        boundaries.forEach(boundary => {boundary.draw()});
+
+        if (lifeMonster1 > 0){
+            monster1Boundaries.forEach(monster1Boundary => {monster1Boundary.draw()});
+            elementMonster1.innerText = 'Life monster 1: ' + lifeMonster1;
+        }else{
+            elementMonster1.innerText = '';
+        }
+
+        if (lifeMonster2 > 0){
+            monster2Boundaries.forEach(monster2Boundary => {monster2Boundary.draw()});
+            elementMonster2.innerText = 'Life monster 2 : ' + lifeMonster2 ;
+        }else{
+            elementMonster2.innerText = '';
+        }
+
+        merchandBoundaries.forEach(merchandBoundary => {merchandBoundary.draw()});
+        player.draw();
+
+        if (lifeMonster1 > 0){
+            spriteMonster1.draw();
+        }
+
+        if (lifeMonster2 > 0){
+            spriteMonster2.draw();
+        }
+
+        foreground.draw();
+        tpBoundaries.forEach(tp_boundary => {tp_boundary.draw()});
+        
+        checkLife();
+        checkLifeMonster1();
+        checkLifeMonster2();
+
+        element.innerText = 'Life : ' + life + '/-/ Money : ' + money 
+        
+        keyboard();
+    },20);
     
-    boundaries.forEach(boundary => {boundary.draw()});
-
-    if (lifeMonster1 > 0){
-        monster1Boundaries.forEach(monster1Boundary => {monster1Boundary.draw()});
-        elementMonster1.innerText = 'Life monster 1: ' + lifeMonster1;
-    }else{
-        elementMonster1.innerText = '';
-    }
-
-    if (lifeMonster2 > 0){
-        monster2Boundaries.forEach(monster2Boundary => {monster2Boundary.draw()});
-        elementMonster2.innerText = 'Life monster 2 : ' + lifeMonster2 ;
-    }else{
-        elementMonster2.innerText = '';
-    }
-
-    merchandBoundaries.forEach(merchandBoundary => {merchandBoundary.draw()});
-    player.draw();
-
-    if (lifeMonster1 > 0){
-        spriteMonster1.draw();
-    }
-
-    if (lifeMonster2 > 0){
-        spriteMonster2.draw();
-    }
-
-    foreground.draw();
-    tpBoundaries.forEach(tp_boundary => {tp_boundary.draw()});
     
-    checkLife();
-    checkLifeMonster1();
-    checkLifeMonster2();
-
-    element.innerText = 'Life : ' + life + '/-/ Money : ' + money 
-    
-    keyboard();
 }
 
 const movables = [background,foreground,spriteMonster1,spriteMonster2,...boundaries,...tpBoundaries,...monster1Boundaries,...monster2Boundaries,...merchandBoundaries];
