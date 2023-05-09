@@ -1,5 +1,11 @@
 # rpgJs_noa_tom
 
+commant le lancer :
+```
+-commancer pars cloner le projet sur vscode
+-ensuite installer l'extension live server
+-puis lancer le projet avec live server
+```
 
 commande:
 ```
