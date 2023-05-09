@@ -5,8 +5,10 @@
 
 function keyboard(){
 let moving = true;
-
+  player.moving = false;
   if(key.z.pressed && lastKey === 'z'){
+    player.moving = true;
+    player.image = player.sprites.up;
     if (inGame==true){
       for(const boundary of boundaries){
         if(player.position.x + player.width >= boundary.position.x && player.position.y + player.height >= (boundary.position.y+5) && player.position.x <= boundary.position.x + boundary.width && player.position.y <= (boundary.position.y+5) + boundary.height){
@@ -48,6 +50,8 @@ let moving = true;
       console.log('in inventory');
     }
   }else if(key.s.pressed && lastKey === 's'){
+    player.moving = true;
+    player.image = player.sprites.down;
     if (inGame==true){
       for (const boundary of boundaries) {
         if(player.position.x + player.width >= boundary.position.x && player.position.y + player.height >= (boundary.position.y-5) && player.position.x <= boundary.position.x + boundary.width && player.position.y <= (boundary.position.y-5) + boundary.height){
@@ -88,6 +92,8 @@ let moving = true;
       console.log('in inventory');
     }
   }else if(key.q.pressed && lastKey === 'q'){
+    player.moving = true;
+    player.image = player.sprites.left;
     if (inGame==true){
       for (const boundary of boundaries) {
         if(player.position.x + player.width >= boundary.position.x + 5 && player.position.y + player.height >= boundary.position.y && player.position.x <= boundary.position.x + 5 + boundary.width && player.position.y <= boundary.position.y + boundary.height){
@@ -129,6 +135,8 @@ let moving = true;
       console.log('in inventory');
     }
   }else if(key.d.pressed && lastKey === 'd'){
+    player.moving = true;
+    player.image = player.sprites.right;
     if (inGame==true){
       for(const boundary of boundaries){
         if(player.position.x + player.width >= (boundary.position.x-5) && player.position.y + player.height >= boundary.position.y && player.position.x <= (boundary.position.x-5) + boundary.width && player.position.y <= boundary.position.y + boundary.height){
