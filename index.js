@@ -397,16 +397,10 @@ function animate(){
 
             if (lifeMonster1 > 0){
                 monster1Boundaries.forEach(monster1Boundary => {monster1Boundary.draw()});
-                elementMonster1.innerText = 'Life monster 1: ' + lifeMonster1;
-            }else{
-                elementMonster1.innerText = '';
             }
 
             if (lifeMonster2 > 0){
                 monster2Boundaries.forEach(monster2Boundary => {monster2Boundary.draw()});
-                elementMonster2.innerText = 'Life monster 2 : ' + lifeMonster2 ;
-            }else{
-                elementMonster2.innerText = '';
             }
 
             merchandBoundaries.forEach(merchandBoundary => {merchandBoundary.draw()});
@@ -427,12 +421,23 @@ function animate(){
             checkLifeMonster1();
             checkLifeMonster2();
 
+            
+        if (inGame==true){
             element.innerText = 'Life : ' + life + '/-/ Money : ' + money 
             shopElement.innerText = '';
             inventoryElement.innerText = '';
             selectedElement.innerText = '';
-            
-        if(inShop==true){
+            if (lifeMonster1 > 0){
+                elementMonster1.innerText = 'Life monster 1: ' + lifeMonster1;
+            }else{
+                elementMonster1.innerText = '';
+            }
+            if (lifeMonster2 > 0){
+                elementMonster2.innerText = 'Life monster 2 : ' + lifeMonster2 ;
+            }else{
+                elementMonster2.innerText = '';
+            }
+        }else if(inShop==true){
             let stringToPrint ="Bienvenue dans le shop// shop list:";
             for (let i = 0; i < shopInventory.length; i++) {
                 stringToPrint = stringToPrint + shopInventory[i].name +', ';
@@ -440,12 +445,16 @@ function animate(){
             shopElement.innerText = stringToPrint;
             selectedElement.innerText = 'selected : ' + selected.name;
             inventoryElement.innerText = '';
+            elementMonster1.innerText = '';
+            elementMonster2.innerText = '';
             element.innerText = 'press a to buy // price : 10 potion , 20 super potion';
             console.log("dans le shop");
 
             
         }else if(inGame==false && inShop==false){
             shopElement.innerText = '';
+            elementMonster1.innerText = '';
+            elementMonster2.innerText = '';
             let tmp = [];
             let stringToPrint ="inventory:";
             for (let i = 0; i < inventoryList.length; i++) {
