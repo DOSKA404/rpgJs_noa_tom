@@ -34,7 +34,7 @@ class SuperPotion{
 }
 
 let life= 100;
-let money= 100;
+let money= 0;
 let inventoryList= [];
 let l =0;//sert a parcourir le tableau inventoryList dans selected
 let selectedInventory = inventoryList[l];
