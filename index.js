@@ -84,7 +84,7 @@ class Boundary {//create collision or tp bloc
 }
 
 class Sprite{//create player sprite or background
-    constructor({position,velocity,image,frames ={max:1}}){
+    constructor({position,velocity,image,frames ={max:1}, sprites}){
         this.position = position
         this.image = image
         this.frames = {...frames, val:0, elapsed: 0}
@@ -94,6 +94,7 @@ class Sprite{//create player sprite or background
             this.height = this.image.height
         }
         this.moving = false
+        this.sprites = sprites
     }
 
     draw(){
@@ -109,7 +110,7 @@ class Sprite{//create player sprite or background
             this.image.height
         )
 
-
+        if (!this.moving) return 
         if (this.frames.max > 1){
             this.frames.elapsed++
         }
@@ -226,9 +227,6 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 const image = new Image();
 image.src = './data/Ile_1/map.png';
 
-const playerImage = new Image();
-playerImage.src = './data/playerSprite/playerDown.png';
-
 const foregroundImage = new Image();
 foregroundImage.src = './data/Ile_1/foreground.png';
 
@@ -238,7 +236,33 @@ monster1Image.src = './data/Ile_1/monster1.png';
 const monster2Image = new Image();
 monster2Image.src = './data/Ile_1/monster2.png';
 
-const player = new Sprite({position:{x:canvas.width/2 - 192/4/2,y:canvas.height/2 - 68/2},image:playerImage,frames:{max:4}});
+const playerDownImage = new Image();
+playerDownImage.src = './data/playerSprite/playerDown.png';
+
+const playerUpImage = new Image();
+playerUpImage.src = './data/playerSprite/playerUp.png';
+
+const playerLeftImage = new Image();
+playerLeftImage.src = './data/playerSprite/playerLeft.png';
+
+const playerRightImage = new Image();
+playerRightImage.src = './data/playerSprite/playerRight.png';
+
+const player = new Sprite({
+    position:{
+        x:canvas.width/2 - 192/4/2,
+        y:canvas.height/2 - 68/2},
+        image:playerDownImage,
+        frames:{
+            max:4
+        },
+        sprites:{
+            up: playerUpImage,
+            down: playerDownImage,
+            left: playerLeftImage,
+            right: playerRightImage,
+        }
+    })
 const background = new Sprite({position:{x:offset.x,y:offset.y},image:image});
 const foreground = new Sprite({position:{x:offset.x,y:offset.y},image:foregroundImage});
 const spriteMonster1 = new Sprite({position:{x:offset.x,y:offset.y},image:monster1Image});
