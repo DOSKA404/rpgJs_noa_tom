@@ -12,7 +12,10 @@ e= aller dans l'inventaire ou le fermer
 ```
 espace = attaquer ou rentrer ou sortir du marchand grenouille
 
-atantion au enemie qui si frotte si piquer
+
+
+atention au enemie qui si frotte si piquer
+
 ```             
 ```
 ```

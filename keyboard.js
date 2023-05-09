@@ -212,7 +212,7 @@ let moving = true;
         ){
           inGame = false;
           inShop = true;
-          console.log("j''ai touché le marchand");
+          console.log("j'ai touché le marchand");
           break;
         }
       }
@@ -227,12 +227,10 @@ let moving = true;
   }else if(key.e.pressed && lastKey === 'e'){
     if (inGame==true){
       inGame = false;
-      inShop = false;
     }else if (inShop==true){
       console.log('in shop');
-    }else{
+    }else if (inGame==false && inShop==false){
       inGame = true;
-      inShop = false;
       console.log('in inventory');
     }
   }

@@ -9,7 +9,7 @@ class potion{
         this.name = "potion";
     }
     use(){
-        life += 20;
+        life += 50;
         if(life > 100){
             life = 100;
         }
@@ -21,7 +21,7 @@ class SuperPotion{
         this.name = "SuperPotion";
     }
     use(){
-        life += 50;
+        life += 100;
         if(life > 100){
             life = 100;
         }
@@ -32,17 +32,16 @@ let life= 100;
 let money= 0;
 let inventoryList= [];
 
-let shopInventory= [new potion(), new SuperPotion()];
-let numberOfPotion= 5;
-let numberOfSuperPotion= 2;
+const potion1= new potion();
+const potion2= new potion();
+const potion3= new potion();
+const potion4= new potion();
+const potion5= new potion();
 
-function shop(){
-    //envoyer un template de li dans le dom avec un bouton acheter
-}
+const superPotion1= new SuperPotion();
+const superPotion2= new SuperPotion();
 
-function inventory(){
-    //envoyer un template de li dans le dom avec un bouton utiliser
-}
+let shopInventory= [potion1,potion2,potion3,potion4,potion5,superPotion1,superPotion2];
 
 let lifeMonster1= 90;
 let lifeMonster2= 90;
@@ -352,47 +351,61 @@ window.addEventListener('keyup',(p) => {
 
 function animate(){
     setTimeout(() => {
-        window.requestAnimationFrame(animate);
-        background.draw(); 
         
-        boundaries.forEach(boundary => {boundary.draw()});
+            window.requestAnimationFrame(animate);
+            background.draw(); 
+            
+            boundaries.forEach(boundary => {boundary.draw()});
 
-        if (lifeMonster1 > 0){
-            monster1Boundaries.forEach(monster1Boundary => {monster1Boundary.draw()});
-            elementMonster1.innerText = 'Life monster 1: ' + lifeMonster1;
-        }else{
-            elementMonster1.innerText = '';
+            if (lifeMonster1 > 0){
+                monster1Boundaries.forEach(monster1Boundary => {monster1Boundary.draw()});
+                elementMonster1.innerText = 'Life monster 1: ' + lifeMonster1;
+            }else{
+                elementMonster1.innerText = '';
+            }
+
+            if (lifeMonster2 > 0){
+                monster2Boundaries.forEach(monster2Boundary => {monster2Boundary.draw()});
+                elementMonster2.innerText = 'Life monster 2 : ' + lifeMonster2 ;
+            }else{
+                elementMonster2.innerText = '';
+            }
+
+            merchandBoundaries.forEach(merchandBoundary => {merchandBoundary.draw()});
+            player.draw();
+
+            if (lifeMonster1 > 0){
+                spriteMonster1.draw();
+            }
+
+            if (lifeMonster2 > 0){
+                spriteMonster2.draw();
+            }
+
+            foreground.draw();
+            tpBoundaries.forEach(tp_boundary => {tp_boundary.draw()});
+            
+            checkLife();
+            checkLifeMonster1();
+            checkLifeMonster2();
+
+            element.innerText = 'Life : ' + life + '/-/ Money : ' + money 
+            shopElement.innerText = '';
+            inventoryElement.innerText = '';
+            
+        if(inShop==true){
+            shopElement.innerText = "Bienvenue dans le shop// shop list:"+shopInventory;
+            inventoryElement.innerText = '';
+            console.log("dans le shop");
+            
+        }else if(inGame==false && inShop==false){
+            shopElement.innerText = '';
+            console.log("dans l'inventaire");
+            inventoryElement.innerText = inventoryList;
         }
-
-        if (lifeMonster2 > 0){
-            monster2Boundaries.forEach(monster2Boundary => {monster2Boundary.draw()});
-            elementMonster2.innerText = 'Life monster 2 : ' + lifeMonster2 ;
-        }else{
-            elementMonster2.innerText = '';
-        }
-
-        merchandBoundaries.forEach(merchandBoundary => {merchandBoundary.draw()});
-        player.draw();
-
-        if (lifeMonster1 > 0){
-            spriteMonster1.draw();
-        }
-
-        if (lifeMonster2 > 0){
-            spriteMonster2.draw();
-        }
-
-        foreground.draw();
-        tpBoundaries.forEach(tp_boundary => {tp_boundary.draw()});
-        
-        checkLife();
-        checkLifeMonster1();
-        checkLifeMonster2();
-
-        element.innerText = 'Life : ' + life + '/-/ Money : ' + money 
-        
         keyboard();
     },20);
+   
     
     
 }
