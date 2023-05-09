@@ -45,8 +45,19 @@ let moving = true;
         movables.forEach(movable => {movable.position.y += 7});
       }
     }else if (inShop==true){
+      if (o!=0){
+        o-=1;
+        selected = shopInventory[o];
+        console.log(o);
+      }
       console.log('in shop');
+      
     }else{
+      if (l!=0){
+        l-=1;
+        selectedInventory = shopInventory[l];
+        console.log(o);
+      }
       console.log('in inventory');
     }
   }else if(key.s.pressed && lastKey === 's'){
@@ -87,8 +98,18 @@ let moving = true;
         movables.forEach(movable => {movable.position.y -= 7});
       }
     }else if (inShop==true){
+      if (o<shopInventory.length-1){
+        o+=1;
+        console.log(o);
+        selected = shopInventory[o];;
+      }
       console.log('in shop');
     }else{
+      if (l<inventoryList.length-1){
+        l+=1;
+        selectedInventory = shopInventory[l];
+        console.log(o);
+      }
       console.log('in inventory');
     }
   }else if(key.q.pressed && lastKey === 'q'){
@@ -130,8 +151,18 @@ let moving = true;
         movables.forEach(movable => {movable.position.x += 7});
       }
     }else if (inShop==true){
+      if (o!=0){
+        o-=1;
+        selected = shopInventory[o];
+        console.log(o);
+      }
       console.log('in shop');
     }else{
+      if (l!=0){
+        l-=1;
+        selectedInventory = shopInventory[l];
+        console.log(o);
+      }
       console.log('in inventory');
     }
   }else if(key.d.pressed && lastKey === 'd'){
@@ -173,8 +204,18 @@ let moving = true;
         movables.forEach(movable => {movable.position.x -= 7});
       }
     }else if (inShop==true){
+      if (o<shopInventory.length-1){
+        o+=1;
+        selected = shopInventory[o];
+        console.log(o);
+      }
       console.log('in shop');
     }else{
+      if (l<inventoryList.length-1){
+        l+=1;
+        selectedInventory = shopInventory[l];
+        console.log(o);
+      }
       console.log('in inventory');
     }
   }else if(key.space.pressed && lastKey === ' '){
@@ -241,5 +282,37 @@ let moving = true;
       inGame = true;
       console.log('in inventory');
     }
+  }else if(key.a.pressed && lastKey === 'a'){
+    if (inShop==true){
+      if (selected.name == 'potion'){
+        if (money >= 10){
+          money -= 10;
+          inventoryList.push(selected);
+        }else{
+          alert('Vous n\'avez pas assez d\'argent');
+          inGame = true;
+          inShop = false;
+        }
+
+      }else if (selected.name == 'SuperPotion'){
+        if (money >= 20){
+          money -= 20;
+          inventoryList.push(selected);
+        }else{
+          alert('Vous n\'avez pas assez d\'argent');
+          inGame = true;
+          inShop = false;
+        }
+      }
+    }else if ( inGame==false && inShop==false){
+      if(life >= 100){
+        alert("attention votre vie est au maximum")
+            inGame = true;
+        }else{
+          inventoryList[l].use();
+          inventoryList.splice(l, 1);
+        }
+      
+    }	
   }
 }

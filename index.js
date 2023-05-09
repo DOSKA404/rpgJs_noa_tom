@@ -7,41 +7,45 @@ let inShop = false;
 class potion{
     constructor(){
         this.name = "potion";
+        this.price = 10;
     }
     use(){
+        
         life += 50;
-        if(life > 100){
-            life = 100;
-        }
+            if(life > 100){
+                life = 100;
+            }
+        
     }
 }
 
 class SuperPotion{
     constructor(){
         this.name = "SuperPotion";
+        this.price = 20;
     }
     use(){
-        life += 100;
-        if(life > 100){
-            life = 100;
-        }
+            life += 100;
+                if(life > 100){
+                    life = 100;
+                }
+            
     }
 }
 
 let life= 100;
-let money= 0;
+let money= 100;
 let inventoryList= [];
+let l =0;//sert a parcourir le tableau inventoryList dans selected
+let selectedInventory = inventoryList[l];
 
 const potion1= new potion();
-const potion2= new potion();
-const potion3= new potion();
-const potion4= new potion();
-const potion5= new potion();
 
 const superPotion1= new SuperPotion();
-const superPotion2= new SuperPotion();
 
-let shopInventory= [potion1,potion2,potion3,potion4,potion5,superPotion1,superPotion2];
+let shopInventory= [potion1,superPotion1];
+let o= 0;//sert a parcourir le tableau shopInventory dans selected
+let selected = shopInventory[o];
 
 let lifeMonster1= 90;
 let lifeMonster2= 90;
@@ -312,6 +316,9 @@ const key={
     },
     e:{
         pressed:false,
+    },
+    a:{
+        pressed:false,
     }
 }
 
@@ -343,7 +350,11 @@ window.addEventListener('keydown',(p) => {
             key.e.pressed = true;
             lastKey = 'e';
             break;
-    }
+        case 'a':
+            key.a.pressed = true;
+            lastKey = 'a';
+            break;
+        }
 })
 
 window.addEventListener('keyup',(p) => {
@@ -365,6 +376,9 @@ window.addEventListener('keyup',(p) => {
             break;
         case 'e':
             key.e.pressed = false;
+            break;
+        case 'a':
+            key.a.pressed = false;
             break;
     }
 })
@@ -416,19 +430,35 @@ function animate(){
             element.innerText = 'Life : ' + life + '/-/ Money : ' + money 
             shopElement.innerText = '';
             inventoryElement.innerText = '';
+            selectedElement.innerText = '';
             
         if(inShop==true){
-            shopElement.innerText = "Bienvenue dans le shop// shop list:"+shopInventory;
+            let stringToPrint ="Bienvenue dans le shop// shop list:";
+            for (let i = 0; i < shopInventory.length; i++) {
+                stringToPrint = stringToPrint + shopInventory[i].name +', ';
+            }
+            shopElement.innerText = stringToPrint;
+            selectedElement.innerText = 'selected : ' + selected.name;
             inventoryElement.innerText = '';
+            element.innerText = 'press a to buy // price : 10 potion , 20 super potion';
             console.log("dans le shop");
+
             
         }else if(inGame==false && inShop==false){
             shopElement.innerText = '';
+            let tmp = [];
+            let stringToPrint ="inventory:";
+            for (let i = 0; i < inventoryList.length; i++) {
+                stringToPrint = stringToPrint + inventoryList[i].name +', ';
+                tmp.push(inventoryList[i].name);
+            }
             console.log("dans l'inventaire");
-            inventoryElement.innerText = inventoryList;
+                selectedElement.innerText = 'selected : '+ tmp[l]
+            element.innerText = 'press a to use the item selected';
+            inventoryElement.innerText = stringToPrint;
         }
         keyboard();
-    },20);
+    },25);
    
     
     
