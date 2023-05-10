@@ -48,15 +48,18 @@ let o= 0;//sert a parcourir le tableau shopInventory dans selected
 let selected = shopInventory[o];
 
 let lifeMonster1= 90;
-let lifeMonster2= 90;
+let lifeMonster2= 100;
+let lifeMonster3= 110;
 
 let j = 0;// pour verifier la mort du monstre 1
 let i = 0;// pour verifier la mort du monstre 2
+let k = 0;// pour verifier la mort du monstre 3
 
 let element = document.getElementById('life')
 
 let elementMonster1 = document.getElementById('monsterLife1')
 let elementMonster2 = document.getElementById('monsterLife2')
+let elementMonster3 = document.getElementById('monsterLife3')
 
 let inventoryElement = document.getElementById('inventory')
 let shopElement = document.getElementById('shop')
@@ -203,7 +206,26 @@ monster2Map.forEach((row, i) => {
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////// INIT MERCHAND /////////////////////////////////////////////
+////////////////////////////////////// INIT MONSTER3 ///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
+const monster3Map = [];
+const monster3Boundaries = [];
+
+for (let i=0; i<monster3.length; i+=100) {//changer le 100 si la taille de la map change
+        monster3Map.push(monster3.slice(i,100 + i));
+}
+
+monster3Map.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if(symbol == '1225'){
+                monster3Boundaries.push(new Boundary({position:{x:j * Boundary.width + offset.x,y:i * Boundary.height + offset.y }}));
+        }
+    });
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////// INIT MERCHAND ///////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 const merchandMap = [];
@@ -239,6 +261,9 @@ monster1Image.src = './data/Ile_1/monster1.png';
 const monster2Image = new Image();
 monster2Image.src = './data/Ile_1/monster2.png';
 
+const monster3Image = new Image();
+monster3Image.src = './data/Ile_1/monster3.png';
+
 const playerDownImage = new Image();
 playerDownImage.src = './data/playerSprite/playerDown.png';
 
@@ -270,6 +295,7 @@ const background = new Sprite({position:{x:offset.x,y:offset.y},image:image});
 const foreground = new Sprite({position:{x:offset.x,y:offset.y},image:foregroundImage});
 const spriteMonster1 = new Sprite({position:{x:offset.x,y:offset.y},image:monster1Image});
 const spriteMonster2 = new Sprite({position:{x:offset.x,y:offset.y},image:monster2Image});
+const spriteMonster3 = new Sprite({position:{x:offset.x,y:offset.y},image:monster3Image});
 
 function checkLife(){
     if (life <= 0){
@@ -290,7 +316,14 @@ function checkLifeMonster1(){
 function checkLifeMonster2(){
     if (lifeMonster2 <= 0 && i == 0){
         i++
-        money += 10;
+        money += 15;
+    }
+}
+
+function checkLifeMonster3(){
+    if (lifeMonster3 <= 0 && k == 0){
+        k++
+        money += 20;
     }
 }
 
@@ -403,6 +436,10 @@ function animate(){
                 monster2Boundaries.forEach(monster2Boundary => {monster2Boundary.draw()});
             }
 
+            if (lifeMonster3 > 0){
+                monster3Boundaries.forEach(monster3Boundary => {monster3Boundary.draw()});
+            }
+
             merchandBoundaries.forEach(merchandBoundary => {merchandBoundary.draw()});
             player.draw();
 
@@ -414,12 +451,17 @@ function animate(){
                 spriteMonster2.draw();
             }
 
+            if (lifeMonster3 > 0){
+                spriteMonster3.draw();
+            }
+
             foreground.draw();
             tpBoundaries.forEach(tp_boundary => {tp_boundary.draw()});
             
             checkLife();
             checkLifeMonster1();
             checkLifeMonster2();
+            checkLifeMonster3();
 
             
         if (inGame==true){
@@ -437,6 +479,11 @@ function animate(){
             }else{
                 elementMonster2.innerText = '';
             }
+            if (lifeMonster3 > 0){
+                elementMonster3.innerText = 'Life monster 3 : ' + lifeMonster3 ;
+            }else{
+                elementMonster3.innerText = '';
+            }
         }else if(inShop==true){
             let stringToPrint ="Bienvenue dans le shop// shop list:";
             for (let i = 0; i < shopInventory.length; i++) {
@@ -447,6 +494,7 @@ function animate(){
             inventoryElement.innerText = '';
             elementMonster1.innerText = '';
             elementMonster2.innerText = '';
+            elementMonster3.innerText = '';
             element.innerText = 'press a to buy // price : 10 potion , 20 super potion';
             console.log("dans le shop");
 
@@ -455,6 +503,7 @@ function animate(){
             shopElement.innerText = '';
             elementMonster1.innerText = '';
             elementMonster2.innerText = '';
+            elementMonster3.innerText = '';
             let tmp = [];
             let stringToPrint ="inventory:";
             for (let i = 0; i < inventoryList.length; i++) {
@@ -473,6 +522,6 @@ function animate(){
     
 }
 
-const movables = [background,foreground,spriteMonster1,spriteMonster2,...boundaries,...tpBoundaries,...monster1Boundaries,...monster2Boundaries,...merchandBoundaries];
+const movables = [background,foreground,spriteMonster1,spriteMonster2,spriteMonster3,...boundaries,...tpBoundaries,...monster1Boundaries,...monster2Boundaries,...monster3Boundaries,...merchandBoundaries];
 
 animate();
