@@ -29,3 +29,5 @@ item :
 -potion = 50 pv suplementaire cout de 10
 -super potion = 100 pv suplementaire cout de 20
 ```
+
+musique: ```chrono trigger - wind scene```
