@@ -1,5 +1,11 @@
 # rpgJs_noa_tom
 
+commant le lancer :
+```
+-commancer pars cloner le projet sur vscode
+-ensuite installer l'extension live server
+-puis lancer le projet avec live server
+```
 
 commande:
 ```
@@ -17,8 +23,9 @@ a = acheter ou utiliser des items
 atention au enemie qui si frotte si piquer
 
 ```             
-```
+
 item : 
+```
 -potion = 50 pv suplementaire cout de 10
 -super potion = 100 pv suplementaire cout de 20
 ```
