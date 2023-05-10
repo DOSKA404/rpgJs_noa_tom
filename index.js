@@ -1,6 +1,14 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
+window.onload = function() {
+    var audio = new Audio('data/music.mp3');
+    document.addEventListener("click", function() {
+        audio.volume = 0.1;
+        audio.play();
+    });
+}
+
 let inGame = true;
 let inShop = false;
 
@@ -15,11 +23,11 @@ class potion{
             if(life > 100){
                 life = 100;
             }
-        
+         
     }
 }
 
-class SuperPotion{
+class SuperPotion{ 
     constructor(){
         this.name = "SuperPotion";
         this.price = 20;
