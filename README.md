@@ -1,10 +1,10 @@
 # rpgJs_noa_tom
 
-Comment lancer notre RPG Mootan's Adventure :
+commant le lancer :
 ```
-- Commencer par cloner le projet de notre git (https://github.com/DOSKA404/rpgJs_noa_tom)
-- Il faut maintenant le lancer avec l'extension live server, deux méthodes, ALT + L ALT + O, ou alors clique droit sur le fichier index.html "Open with Live Server"
-- Si vous ne l'avez pas, Appuyer simultanément sur CTRL + SHIFT + X, et rechercher Open live server puis installer le.
+-commancer pars cloner le projet sur vscode
+-ensuite installer l'extension live server
+-puis lancer le projet avec live server
 ```
 
 Commande :
